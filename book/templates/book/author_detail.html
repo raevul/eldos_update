@@ -1,0 +1,31 @@
+{%  extends 'base_book.html' %}
+{% load static %}
+{% block title %}
+    Author Detail
+{% endblock %}
+
+{% block content %}
+<section id="banner">
+    <div class="content">
+        <header>
+            <h1>{{ author.name }} {{ author.last_name }}</h1>
+            <p>Год рождения: {{ author.date_of_birth }}</p>
+        </header>
+        <h4>Произведения: </h4>
+        {% for book in author_books %}
+            <p><a href="{{ book.get_absolute_url }}">{{ book }}</a></p>
+        {% endfor %}
+    </div>
+    <div class="mini-posts">
+        {% if author.image %}
+        <article>
+            <a href="#" class="image"><img src="{{ author.image.url }}" alt=""  /></a>
+        </article>
+        {% else %}
+        <article>
+            <a href="#" class="image"><img src="{% static 'images/default_user.jpg' %}" alt="" /></a>
+        </article>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

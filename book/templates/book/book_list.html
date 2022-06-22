@@ -1,0 +1,31 @@
+{%  extends 'base_book.html' %}
+{% load static %}
+{% block title %}
+    Book List
+{% endblock %}
+
+{% block content %}
+<!-- Section -->
+    <section>
+        <header class="major">
+            <h2>Книги</h2>
+        </header>
+        <div class="posts">
+            {% for book in books %}
+            <article>
+                {% if book.image %}
+                    <a href="{{ book.get_absolute_url }}" class="image"><img src="{{ book.image.url }}" alt="" style="width: 350px; height: 500px" /></a>
+                {% else %}
+                    <a href="{{ book.get_absolute_url }}" class="image"><img src="{% static 'images/default.jpg' %}" alt="" style="width: 350px; height: 500px" /></a>
+                {% endif %}
+                <h3>{{ book.title }}</h3>
+                <p>{{ book.price }} сом</p>
+                <ul class="actions">
+                    <li><a href="{{ book.get_absolute_url }}" class="button">Подробнее</a></li>
+                </ul>
+            </article>
+            {% endfor %}
+        </div>
+
+    </section>
+{% endblock %}

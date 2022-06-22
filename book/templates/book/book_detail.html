@@ -1,0 +1,40 @@
+{%  extends 'base_book.html' %}
+{% load static %}
+{% block title %}
+    Book Detail
+{% endblock %}
+
+{% block content %}
+<!-- Content -->
+	<section>
+		<header class="main">
+			<h1>{{ book.title }}</h1>
+		</header>
+		{% if book.image %}
+			<span class="image main"><img src="{{ book.image.url }}" alt="" style="width: 400px; height: 550px" /></span>
+		{% else %}
+			<span class="image main"><img src="{% static 'images/default.jpg' %}" alt="" style="width: 400px; height: 550px" /></span>
+		{% endif %}
+
+			<form action="{% url 'cart:cart_add' book.id %}" class="cart d-flex justify-content-between total font-weight-bold mt-4" method="post" enctype='multipart/form-data'>
+				{% csrf_token %}
+					<div class="quantity">
+					  <input type="number" step="1" max="10" min="1"  name="quantity" value="1" title="Qty" class="input-text qty text" size="4" />
+					</div>
+				<input type="hidden" name="add-to-cart" value="4015" />
+				<button type="submit" class="single_add_to_cart_button button alt">Добавить в корзину</button>
+		  	</form>
+
+			<div class="d-flex justify-content-between total font-weight-bold mt-4">
+				<a href="#" class="button">Читать</a>
+			</div>
+
+		<hr class="major" />
+		<div class="content">
+			<header>
+				<h3>Описание: </h3>
+				<p>{{ book.description }}</p>
+			</header>
+    	</div>
+	</section>
+{% endblock %}

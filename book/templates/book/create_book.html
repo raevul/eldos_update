@@ -1,0 +1,15 @@
+{% extends 'base_book.html' %}
+{% block title %} Create Book {% endblock %}
+
+{% block content %}
+    <form action="{% url 'create_book' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+{% endblock %}

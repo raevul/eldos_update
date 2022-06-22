@@ -1,0 +1,15 @@
+{% extends 'base_book.html' %}
+{% block title %} Book Update {% endblock %}
+
+{% block content %}
+    <form action="{{ book.get_update_url }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+{% endblock %}

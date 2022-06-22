@@ -1,0 +1,61 @@
+{%  extends 'base_book.html' %}
+{% load static %}
+{% block title %}
+    Filter Book
+{% endblock %}
+
+{% block content %}
+
+<!-- Section -->
+<section>
+    <header class="major">
+        <h2>Books</h2>
+    </header>
+    <div class="posts">
+        {% for book in books %}
+        <article>
+            {% if book.image %}
+                <a href="#" class="image"><img src="{{ book.image.url }}" alt="" style="width: 350px; height: 500px" /></a>
+            {% else %}
+                <a href="#" class="image"><img src="{% static 'images/default.jpg' %}" alt="" style="width: 350px; height: 500px" /></a>
+            {% endif %}
+            <h3>{{ book.title }}</h3>
+            <p>{{ book.price }}</p>
+            <ul class="actions">
+                <li><a href="{{ book.get_absolute_url }}" class="button">More</a></li>
+            </ul>
+        </article>
+        {% endfor %}
+    </div>
+
+    {% if books %}
+        <nav class="woocommerce-pagination" aria-label="Page navigation example">
+            <ul class='pagination'>
+                {% if books.has_previous %}
+                <li>
+                    <a class="prev page-numbers {% if not books.has_previous %} disabled {% endif %}" href="?page=1"><button>&lt;</button></a>
+                </li>
+                {% endif %}
+                {% for page in books.paginator.page_range %}
+                {% if books.number == page %}
+                <li>
+                    <a class='page-numbers current' href="?page={{ page }}"><button>{{ page }}</button></a>
+                </li>
+                {% elif page > books.number|add:-2 and page < books.number|add:2 %}
+
+                <li>
+                    <a class='page-numbers' href='?page={{ page }}'><button>{{ page }}</button></a>
+                </li>
+
+                {% endif %}
+                {% endfor %}
+                {% if books.end_index %}
+                <li>
+                   <a class="next page-numbers" href="?page={{ books.paginator.num_pages }}"><button>&gt;</button></a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+	<head>
+		<title>{% block title %} Bookshop {% endblock %}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="{% url 'book_list' %}" class="logo"><strong>Электронные книги</strong></a>
+									<ul class="icons">
+										<li><a href="https://twitter.com/?lang=ru" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="https://www.facebook.com/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="https://www.instagram.com/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="https://ru.linkedin.com/" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+									</ul>
+
+								</header>
+							{% block content %}
+
+							{% endblock %}
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form class="d-flex">
+										<input id="query" class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
+										<button class="btn btn-outline-success" type="submit">Поиск</button>
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Меню</h2>
+									</header>
+									<ul>
+										<li>
+											<a href="{% url 'book_list' %}">Главная Страница</a></li>
+										<li>
+											<span class="opener">Авторы</span>
+											{% if authors %}
+												<ul>
+													{% for author in authors %}
+														<li><a href="{% url 'author_detail' author.id %}">{{ author.name }} {{ author.last_name }}</a></li>
+													{% endfor %}
+												</ul>
+											{% else %}
+												<ul>
+													<li>Нет результата</li>
+												</ul>
+											{% endif %}
+											{% if request.user.is_authenticated %}
+											<li>
+												<a href="{% url 'cart:cart_detail' %}">Корзина</a>
+											</li>
+											<li>
+												<a href="{% url 'profile' %}" class="">{{ user.username }}</a>
+											</li>
+										 	{% else %}
+											<li>
+												<a href="{% url 'register' %}" >Регистрация</a>
+											</li>
+											<li>
+												<a href="{% url 'login' %}" >Войти</a>
+											</li>
+											{% endif %}
+											<li>
+												<span class="opener">Жанры</span>
+												{% if genres %}
+													<ul>
+													{% for genre in genres %}
+														<li><a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a></li>
+													{% endfor %}
+													</ul>
+												{% else %}
+													<ul>
+														<li>Нет результата</li>
+													</ul>
+												{% endif %}
+											</li>
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Контакты</h2>
+									</header>
+									<ul class="contact">
+											<li class="icon solid fa-envelope"><a href="#">eldosyksanov@gmail.com</a></li>
+										<li class="icon solid fa-phone">(703)489-202</li>
+										<li class="icon solid fa-home">Бишкек</li>
+									</ul>
+								</section>
+
+
+						</div>
+					</div>
+
+			</div>
+
+
+			{% if request.user.is_authenticated and request.user.is_staff %}
+				<div class="admin-panel align-items-center">
+					<a href="admin/" class="btn btn-outline-info">Admin</a>
+					{% block admin-panel %}
+
+					{% endblock %}
+				</div>
+			{% endif %}
+
+		{% if books %}
+        <nav class="woocommerce-pagination align-center" aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if books.has_previous %}
+                <li>
+                    <a class="prev page-numbers {% if not books.has_previous %} disabled {% endif %}" href="?page=1"><button>&lt;</button></a>
+                </li>
+                {% endif %}
+                {% for page in books.paginator.page_range %}
+                {% if books.number == page %}
+                <li>
+                    <a class='page-numbers current' href="?page={{ page }}"><button>{{ page }}</button></a>
+                </li>
+                {% elif page > books.number|add:-2 and page < books.number|add:2 %}
+
+                <li>
+                    <a class='page-numbers' href='?page={{ page }}'><button>{{ page }}</button></a>
+                </li>
+
+                {% endif %}
+                {% endfor %}
+                {% if books.end_index %}
+                <li>
+                   <a class="next page-numbers" href="?page={{ books.paginator.num_pages }}"><button>&gt;</button></a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+		<ul class="pagination">
+			{% if books.has_previous %}
+				<li href="?page=1"><span class="{% if not books.has_previous %} button disabled {% endif %}">Last</span></li>
+			{% endif %}
+			{% for page in books.paginator.page_range %}
+				{% if books.number == page %}
+					<li><a href="?page={{ page }}" class="page active">{{ page }}</a></li>
+				{% elif page > books.number|add:-2 and page < books.number|add:2 %}
+					<li><a href="?page={{ page }}" class="page active">{{ page }}</a></li>
+				{% endif %}
+			{% endfor %}
+
+			{% if books.end_index %}
+				<li><a href="?page={{ books.paginator.num_pages }}" class="button">Last</a></li>
+			{% endif %}
+		</ul>
+        {% endif %}
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>

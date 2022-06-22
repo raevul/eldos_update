@@ -1,0 +1,21 @@
+{% extends 'base_book.html' %}
+{% load static %}
+
+{% block title %} {{ user.username }} {% endblock %}
+
+{% block content %}
+<section id="banner">
+    <div class="content">
+        <header>
+            <h2>Username: {{ user.username }}</h2>
+            <p>Email: {{ user.email }}</p>
+        </header>
+            <button><a href="{% url 'logout' %}">Выйти</a></button>
+    </div>
+    <div class="mini-posts">
+        <article>
+            <a href="#" class="image"><img src="{% static 'images/default_user.jpg' %}" alt=""  /></a>
+        </article>
+    </div>
+</section>
+{% endblock %}
