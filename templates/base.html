@@ -42,7 +42,7 @@
 								<section id="search" class="alt">
 									<form class="d-flex">
 										<input id="query" class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
-										<button class="btn btn-outline-success" type="submit">Поиск</button>
+										<button class="button primary icon solid fa-search" type="submit">Поиск</button>
 									</form>
 								</section>
 
@@ -128,49 +128,29 @@
 			{% endif %}
 
 		{% if books %}
-        <nav class="woocommerce-pagination align-center" aria-label="Page navigation example">
-            <ul class="pagination">
+            <ul class="pagination align-center">
                 {% if books.has_previous %}
-                <li>
-                    <a class="prev page-numbers {% if not books.has_previous %} disabled {% endif %}" href="?page=1"><button>&lt;</button></a>
-                </li>
+					<li>
+						<a class="page {% if not books.has_previous %} disabled {% endif %}" href="?page=1"><<</a>
+					</li>
                 {% endif %}
                 {% for page in books.paginator.page_range %}
                 {% if books.number == page %}
-                <li>
-                    <a class='page-numbers current' href="?page={{ page }}"><button>{{ page }}</button></a>
-                </li>
-                {% elif page > books.number|add:-2 and page < books.number|add:2 %}
-
-                <li>
-                    <a class='page-numbers' href='?page={{ page }}'><button>{{ page }}</button></a>
-                </li>
-
+					<li>
+						<a class='page active' href="?page={{ page }}">{{ page }}</a>
+					</li>
+                {% elif page > books.number|add:-3 and page < books.number|add:3 %}
+					<li>
+						<a class='page' href='?page={{ page }}'>{{ page }}</a>
+					</li>
                 {% endif %}
                 {% endfor %}
                 {% if books.end_index %}
-                <li>
-                   <a class="next page-numbers" href="?page={{ books.paginator.num_pages }}"><button>&gt;</button></a>
-                </li>
+					<li>
+					   <a class="page" href="?page={{ books.paginator.num_pages }}">>></a>
+					</li>
                 {% endif %}
             </ul>
-        </nav>
-		<ul class="pagination">
-			{% if books.has_previous %}
-				<li href="?page=1"><span class="{% if not books.has_previous %} button disabled {% endif %}">Last</span></li>
-			{% endif %}
-			{% for page in books.paginator.page_range %}
-				{% if books.number == page %}
-					<li><a href="?page={{ page }}" class="page active">{{ page }}</a></li>
-				{% elif page > books.number|add:-2 and page < books.number|add:2 %}
-					<li><a href="?page={{ page }}" class="page active">{{ page }}</a></li>
-				{% endif %}
-			{% endfor %}
-
-			{% if books.end_index %}
-				<li><a href="?page={{ books.paginator.num_pages }}" class="button">Last</a></li>
-			{% endif %}
-		</ul>
         {% endif %}
 
 		<!-- Scripts -->

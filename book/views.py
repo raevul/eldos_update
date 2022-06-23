@@ -21,13 +21,13 @@ def book_list(request):
         books = Book.objects.filter(title__icontains=search)
 
     paginator = Paginator(books, settings.PAGINATOR_NUM)
-    page_number = request.GET.get('page')
+    page_number = request.GET.get('page', 1)
     books = paginator.get_page(page_number)
 
     context = {
         'books': books,
         'genres': genres,
-        'authors': authors
+        'authors': authors,
     }
     return render(request, 'book/book_list.html', context)
 

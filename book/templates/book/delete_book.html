@@ -4,9 +4,9 @@
 {% block content %}
     <form action="{{ book.get_delete_url }}" method="post">
         {% csrf_token %}
-        <h3 style="margin-top: 70px">Are you sure you want to delete "{{ book.title }}" book?</h3>
-        <button type="submit" class="btn btn-outline-success"><a href="{{ book.get_absolute_url }}">Cancel</a></button>
+        <h3 style="margin-top: 70px">Вы уверены что хотите удалить книгу "{{ book.title }}"?</h3>
+        <button type="submit" class="button"><a href="{{ book.get_absolute_url }}">Отмена</a></button>
 
-        <button type="submit" class="btn btn-outline-danger">Delete</button>
+        <button type="submit" class="button primary">Удалить</button>
     </form>
 {% endblock %}

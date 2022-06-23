@@ -2,44 +2,50 @@
 {% block title %} Cart {% endblock %}
 
 {% block content %}
-    <h1>Ваша корзина</h1>
-        <table class="cart">
-            <thead>
-                <tr style="background-color: #e35f5f; color: #1b1b1b">
-                    <th>Картинка</th>
-                    <th>Книга</th>
-                    <th>Количество</th>
-                    <th>Удалить</th>
-                    <th>Цена за штуку</th>
-                    <th>Цена</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for item in cart %}
-                {% with book=item.book %}
-                    <tr>
-                        <td>
-                            <a href="{{ book.get_absolute_url }}">
-                                <img style="height: 80px; margin-top: 30px; margin-bottom: 30px;" src="{{ book.image.url }}">
-                            </a>
-                        </td>
-                        <td style="color: #1b1b1b">{{ book.title }}</td>
-                        <td style="color: #1b1b1b">{{ item.quantity }}</td>
-                        <td><a href="{% url 'cart:cart_remove' book.id %}">Удалить</a></td>
-                        <td style="color: #1b1b1b" class="num">{{ item.price }} сом</td>
-                        <td style="color: #1b1b1b" class="num">{{ item.total_price }} сом</td>
+    <h2>Ваша корзина</h2>
+        {% if cart %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr style="background-color: #e35f5f;">
+                            <th>Картинка</th>
+                            <th>Книга</th>
+                            <th>Количество</th>
+                            <th>Удалить</th>
+                            <th>Цена за штуку</th>
+                            <th>Цена</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart %}
+                        {% with book=item.book %}
+                            <tr>
+                                <td>
+                                    <a href="{{ book.get_absolute_url }}">
+                                        <img style="height: 120px; width: 70px" class="image fit" src="{{ book.image.url }}">
+                                    </a>
+                                </td>
+                                <td>{{ book.title }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td><a class="button small" href="{% url 'cart:cart_remove' book.id %}">Удалить</a></td>
+                                <td class="num">{{ item.price }} сом</td>
+                                <td class="num">{{ item.total_price }} сом</td>
+                            </tr>
+                        {% endwith %}
+                    {% endfor %}
+                    <tr style="margin-top:20px; background-color: #e35f5f; color: #1b1b1b">
+                        <td>Общая цена</td>
+                        <td colspan="4"></td>
+                        <td class="num">{{ cart.get_total_price }} сом</td>
                     </tr>
-                {% endwith %}
-            {% endfor %}
-            <tr style="margin-top:20px; background-color: #e35f5f; color: #1b1b1b">
-                <td>Общая цена</td>
-                <td colspan="4"></td>
-                <td class="num">{{ cart.get_total_price }} сом</td>
-            </tr>
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <h3>Ваша корзина пустая</h3>
+        {% endif %}
         <p class="text-right">
-            <a href="{% url 'book_list' %}" class="single_add_to_cart_button button alt">В магазин</a>
-            <a href="#" class="single_add_to_cart_button button alt">Купить</a>
+            <a href="{% url 'book_list' %}" class="button fit">В магазин</a>
+            <a style="margin-top: 7px" href="#" class="button fit">Купить</a>
         </p>
 {% endblock %}

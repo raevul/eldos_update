@@ -8,7 +8,7 @@
 <!-- Content -->
 	<section>
 		<header class="main">
-			<h1>{{ book.title }}</h1>
+			<h2>{{ book.title }}</h2>
 		</header>
 		{% if book.image %}
 			<span class="image main"><img src="{{ book.image.url }}" alt="" style="width: 400px; height: 550px" /></span>
@@ -18,15 +18,15 @@
 
 			<form action="{% url 'cart:cart_add' book.id %}" class="cart d-flex justify-content-between total font-weight-bold mt-4" method="post" enctype='multipart/form-data'>
 				{% csrf_token %}
-					<div class="quantity">
+					<div class="quantity" name="demo-category">
 					  <input type="number" step="1" max="10" min="1"  name="quantity" value="1" title="Qty" class="input-text qty text" size="4" />
 					</div>
 				<input type="hidden" name="add-to-cart" value="4015" />
-				<button type="submit" class="single_add_to_cart_button button alt">Добавить в корзину</button>
+				<button type="submit" class="button primary fit small">Добавить в корзину</button>
 		  	</form>
 
 			<div class="d-flex justify-content-between total font-weight-bold mt-4">
-				<a href="#" class="button">Читать</a>
+				<a href="{% url 'read_book' book.slug %}" class="button primary fit small">Читать</a>
 			</div>
 
 		<hr class="major" />

@@ -142,6 +142,6 @@ MEDIA_ROOT = 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # custom settings
-PAGINATOR_NUM = 2
+PAGINATOR_NUM = 4
 CARD_SESSION_ID = 'cart'
 

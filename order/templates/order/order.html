@@ -1,0 +1,32 @@
+{% extends 'base_book.html' %}
+
+{% block title %} Order {% endblock %}
+
+{% block content %}
+<!-- Form -->
+    <h3>Заказ</h3>
+
+    <form method="post" action="#">
+        {% csrf_token %}
+        <div class="row gtr-uniform">
+            <div class="col-6 col-12-xsmall">
+                <input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />{{ order_form.email }}
+            </div>
+            <div class="col-6 col-12-xsmall">
+                <input type="tel" name="demo-tel" id="demo-tel" value="" placeholder="Phone" />{{ order_form.phone }}
+            </div>
+            <div class="col-6 col-12-xsmall">
+                <input type="text" name="demo-address" id="demo-address" value="" placeholder="Address" />{{ order_form.address }}
+            </div>
+            <div class="col-6 col-12-xsmall">
+                <input type="text" name="demo-text" id="demo-text" value="" placeholder="City" />{{ order_form.city }}
+            </div>
+            <!-- Break -->
+            <div class="col-12">
+                <select name="demo-category" id="demo-category">
+                    <option value="{{ book.id }}">{{ book }}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+{% endblock %}
