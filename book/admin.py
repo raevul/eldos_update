@@ -14,3 +14,4 @@ class GenreAdmin(admin.ModelAdmin):
 admin.site.register(Author)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Genre, GenreAdmin)
+admin.site.register(Comment)

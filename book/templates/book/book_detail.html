@@ -16,6 +16,7 @@
 			<span class="image main"><img src="{% static 'images/default.jpg' %}" alt="" style="width: 400px; height: 550px" /></span>
 		{% endif %}
 
+		{% if request.user.is_authenticated %}
 			<form action="{% url 'cart:cart_add' book.id %}" class="cart d-flex justify-content-between total font-weight-bold mt-4" method="post" enctype='multipart/form-data'>
 				{% csrf_token %}
 					<div class="quantity" name="demo-category">
@@ -28,13 +29,44 @@
 			<div class="d-flex justify-content-between total font-weight-bold mt-4">
 				<a href="{% url 'read_book' book.slug %}" class="button primary fit small">Читать</a>
 			</div>
+		{% endif %}
 
 		<hr class="major" />
 		<div class="content">
 			<header>
-				<h3>Описание: </h3>
+				<h2>Описание: </h2>
 				<p>{{ book.description }}</p>
 			</header>
     	</div>
+		<h3>Комментарии ({{ book.comments.all|length }})</h3>
+
+		{% if book.comments %}
+			{% for comment in book.comments.all %}
+
+				<div class="box">
+					<h6 class="headers">{{comment.created_at}}</h6>
+					<div class="box">
+						{{comment.title}}
+
+						{% if request.user.is_authenticated %}
+						<div>
+							<a href="#" class="" style="margin-right: 5px">Изменить</a>
+							<a href="#" class="">Удалить</a>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+
+			{% endfor %}
+		{% endif %}
+
+		<form action="{% url 'add_comment' book.slug %}" method="post" id="commentform" class="comment">
+			{% csrf_token %}
+			<div class="col-12" style="margin-top: 10px">
+				<textarea name="comment" id="comment" placeholder="Введите комментарий" rows="6" aria-required="true"></textarea>
+				<input style="margin-top: 10px" type="submit" value="Отправить" class="primary" />
+			</div>
+		</form>
+
 	</section>
 {% endblock %}

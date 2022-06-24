@@ -102,6 +102,23 @@ class DeleteBook(LoginRequiredMixin, View):
         return redirect(reverse('book_list'))
 
 
+class CommentDetail(View):
+    def get(self, request, slug):
+        book = get_object_or_404(Book, slug)
+        return render(request, 'book/book_detail.html', {'book': book})
+
+
+class AddComment(View):
+    def post(self, request, slug):
+        comment_form = CommentForm(request.POST)
+        book = Book.objects.get(slug=slug)
+        if comment_form.is_valid():
+            form = comment_form.save(commit=False)
+            form.book = book
+            form.save()
+        return redirect('/')
+
+
 class Register(RegisterOrLoginMixin, CreateView):
     form_class = RegistrationForm
     template_name = 'book/register.html'
