@@ -16,4 +16,5 @@ urlpatterns = [
     path('book/<str:slug>/', book_detail, name='book_detail'),
     path('author/<int:pk>/', author_detail, name='author_detail'),
     path('comment/<str:slug>/', AddComment.as_view(), name='add_comment'),
+    path('hello/', index)
 ]

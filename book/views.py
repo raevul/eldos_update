@@ -143,3 +143,7 @@ def logout_user(request):
 
 def profile(request):
     return render(request, 'book/profile.html')
+
+
+def index(request):
+    return render(request, 'book/index.html')

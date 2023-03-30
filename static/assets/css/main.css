@@ -219,29 +219,6 @@ hr {
   hr.major {
     margin: 3em 0; }
 
-.admin-panel {
-  border: 1px solid #999999;
-  border-radius: 2px;
-  position: fixed;
-  right: 50px;
-  bottom: 30px;
-  opacity: 0.5;
-  padding: 15px;
-}
-
-.admin-panel a {
-  display: block;
-  margin: 5px 0;
-}
-
-.admin-panel:hover {
-  opacity: 1;
-}
-
-a.edit, a.delete {
-  display: none;
-}
-
 .align-left {
   text-align: left; }
 
@@ -250,7 +227,6 @@ a.edit, a.delete {
 
 .align-right {
   text-align: right; }
-
 
 /* Row */
 .row {
